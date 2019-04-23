@@ -45,53 +45,36 @@ int main()
 
 static double newton(double epsilon)
 {
-  double jk = 0.5;
-  double jkn[10];
+  double jkn[11];
   double F = 0.0;
   double f;
 
   double modulo;
 
-  int cont, i;
+  int cont = -1, i, j;
 
   if(epsilon >= 0 && epsilon <= 1)
   {
-    for(i = 0; i < sizeof(deposito); i++)
+    jkn[0] = 0.5;
+
+    for(i = 0; i < 5; i++)
     {
-      //funcao
-      if(i == 0)
+      cont++;
+
+      for(j = cont; j < 5; j++)
       {
-        for(cont = 0; cont < sizeof(deposito); cont++)
-        {
-          F = deposito[cont]*pow(1 + jk, tempo[cont]) + F;
-          f = tempo[cont]*deposito[cont]*pow(1 + jk, tempo[cont]-1) + f;
-        }
-
-        jkn[i] = jk - (F/f);
-
-        modulo = (jkn[i] - jk) * (-1);
-
-        if(modulo < epsilon)
-          return jk;
+        F = deposito[cont]*pow(1 + jkn[i], t_s - tempo[cont]) + F;
+        f = (t_s - tempo[cont])*deposito[cont]*pow(1 + jkn[i], t_s - tempo[cont] -1) + f;
       }
 
-      else
-      {
-        for(cont = 0; cont < sizeof(deposito); cont++)
-        {
-          F = deposito[cont]*pow(1 + jkn[i], tempo[cont]) + F;
-          f = tempo[cont]*deposito[cont]*pow(1 + jkn[i], tempo[cont]-1) + f;
-        }
+      jkn[i + 1] = jkn[i] - (F/f);
 
-        jkn[i+1] = jk - (F/f);
+      modulo = (jkn[i + 1] - jkn[i]) * (-1);
 
-        modulo = (jkn[i + 1] - jkn[i]) * (-1);
-
-        if(modulo < epsilon)
-          return jkn[i];
-      }
-
+      if(modulo < epsilon)
+        return jkn[i + 1];
     }
+
   }
 
   return -1; 
