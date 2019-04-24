@@ -15,14 +15,14 @@ int main()
   int i = 0;
   char perc = '%';
    
-  printf("Digite os valores dos depositos e o mes de cada deposito\n");
+  printf("Digite os valores dos depósitos e o mês de cada depósito\n");
 
   for(i = 0; i < 10; i++)
   {
     printf("Valor:");
     scanf(" %lf", &deposito[i]);
 
-    printf("Mes:");
+    printf("Mês:");
     scanf(" %d", &tempo[i]);
 
     printf("\n");
@@ -31,20 +31,20 @@ int main()
   printf("Saldo:");
   scanf(" %lf", &saldo);
 
-  printf("Mes Saldo:");
+  printf("Mês Saldo:");
   scanf(" %d", &t_s);
   
-  printf("\nValor de Precisao:");
+  printf("\nValor de Precisão:");
   scanf(" %lf", &e);
 
-  printf("\nTaxa de Juros e de aproximadamente: %.2lf%c\n", newton(e), perc);
+  printf("\nTaxa de juros anual é de aproximadamente: %.2lf%c\n", newton(e), perc);
 
   return 0;
 }
 
 static double newton(double epsilon)
 {
-  double jkn = 0.0;
+  double jkn = 0.5;
   double aux = 0.0;
   double F = 0.0;
   double f = 0.0;
@@ -55,16 +55,14 @@ static double newton(double epsilon)
 
   if(epsilon >= 0 && epsilon <= 1)
   {
-    jkn = 0.5;
-
     do
     {
       F = f = 0.0;
 
       for(cont = 0; cont < 10; cont++)
       {
-        F = deposito[cont]*pow(1 + jkn, t_s - tempo[cont]) + F;
-        f = (t_s - tempo[cont])*deposito[cont]*pow(1 + jkn, t_s - tempo[cont] -1) + f;
+        F += deposito[cont]*pow(1 + jkn, t_s - tempo[cont]);
+        f += (t_s - tempo[cont])*deposito[cont]*pow(1 + jkn, t_s - tempo[cont] -1);
       }
       
       F -= saldo;
