@@ -1,2 +1,5 @@
 # Newton-Raphson-
-APS de Técnicas de Programação
+
+Trabalho de Faculdade
+
+Atividade Prática Supervisionada de Técnicas de Programação
